@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { type SubmitEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -9,43 +9,61 @@ import { FieldError } from "~/components/ui/field-error";
 import { FormError } from "~/components/ui/form-error";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { getFirstErrorMessage, parseFormData } from "~/lib/form-data";
+import { parseFormData } from "~/lib/form-data";
 import { signUpSchema } from "~/lib/schemas/auth";
-import type { AuthState } from "~/server/actions/auth";
-import { signUp } from "~/server/actions/auth";
+import { api } from "~/trpc/react";
+
+type FieldErrors = Record<string, string[] | undefined>;
 
 export function SignUpForm() {
   const router = useRouter();
-  const [state, formAction, isPending] = useActionState<
-    AuthState | null,
-    FormData
-  >(async (prev, formData) => {
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors | undefined>();
+  const [formError, setFormError] = useState<string | undefined>();
+
+  const signUp = api.auth.signUp.useMutation({
+    onSuccess(result) {
+      if (result.success) {
+        toast.success("Account created. Sign in with your credentials.");
+        router.push("/sign-in");
+      } else {
+        setFormError(result.formError);
+        toast.error(result.formError);
+      }
+    },
+    onError(err) {
+      const message =
+        (err.data as { formError?: string } | undefined)?.formError ??
+        err.message ??
+        "Something went wrong";
+      setFormError(message);
+      toast.error(message);
+    },
+  });
+
+  function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setFormError(undefined);
+    setFieldErrors(undefined);
+
+    const formData = new FormData(e.currentTarget);
     const parsed = parseFormData(formData, signUpSchema);
 
     if (!parsed.success) {
-      const fieldErrors = parsed.error.flatten().fieldErrors;
-      return { success: false, fieldErrors };
+      const errors = parsed.error.flatten().fieldErrors as FieldErrors;
+      setFieldErrors(errors);
+
+      return;
     }
 
-    const result = await signUp(prev, formData);
-
-    if (result.success) {
-      toast.success("Account created. Sign in with your credentials.");
-      router.push("/sign-in");
-    } else {
-      const message =
-        result.formError ?? getFirstErrorMessage(result.fieldErrors);
-      if (message) toast.error(message);
-    }
-
-    return result;
-  }, null);
-
-  const fieldErrors = state?.fieldErrors;
-  const formError = state?.formError;
+    signUp.mutate({
+      email: parsed.data.email,
+      password: parsed.data.password,
+      name: parsed.data.name,
+    });
+  }
 
   return (
-    <form action={formAction} className="grid gap-4">
+    <form onSubmit={handleSubmit} className="grid gap-4">
       <FormError message={formError} />
       <div className="grid gap-2">
         <Label htmlFor="name">Name (optional)</Label>
@@ -55,7 +73,7 @@ export function SignUpForm() {
           type="text"
           placeholder="Your name"
           autoComplete="name"
-          disabled={isPending}
+          disabled={signUp.isPending}
           aria-invalid={!!fieldErrors?.name}
         />
         <FieldError name="name" fieldErrors={fieldErrors} />
@@ -67,9 +85,8 @@ export function SignUpForm() {
           name="email"
           type="email"
           placeholder="you@example.com"
-          autoComplete="email"
           required
-          disabled={isPending}
+          disabled={signUp.isPending}
           aria-invalid={!!fieldErrors?.email}
         />
         <FieldError name="email" fieldErrors={fieldErrors} />
@@ -81,17 +98,14 @@ export function SignUpForm() {
           name="password"
           type="password"
           placeholder="At least 8 characters"
-          autoComplete="new-password"
           required
-          minLength={8}
-          maxLength={72}
-          disabled={isPending}
+          disabled={signUp.isPending}
           aria-invalid={!!fieldErrors?.password}
         />
         <FieldError name="password" fieldErrors={fieldErrors} />
       </div>
-      <Button type="submit" className="w-full" disabled={isPending}>
-        {isPending ? "Signing up…" : "Sign up"}
+      <Button type="submit" className="w-full" disabled={signUp.isPending}>
+        {signUp.isPending ? "Signing up…" : "Sign up"}
       </Button>
     </form>
   );

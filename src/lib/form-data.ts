@@ -29,12 +29,3 @@ export function parseFormData<T>(
         error: { flatten: () => { fieldErrors: Record<string, string[]> } };
       };
 }
-
-export function getFirstErrorMessage(
-  fieldErrors: Record<string, string[] | undefined> | undefined | null,
-  fallback = "Invalid input",
-): string {
-  if (!fieldErrors) return fallback;
-  const first = Object.values(fieldErrors).flat()[0];
-  return first ?? fallback;
-}

@@ -1,5 +1,6 @@
 "use client";
 
+import { type ComponentProps } from "react";
 import { signOut } from "next-auth/react";
 
 import { Button } from "~/components/ui/button";
@@ -7,7 +8,7 @@ import { Button } from "~/components/ui/button";
 export function SignOutButton({
   className,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: ComponentProps<typeof Button>) {
   return (
     <Button
       type="button"
