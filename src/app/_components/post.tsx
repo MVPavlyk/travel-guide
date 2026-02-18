@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { FieldError, type FieldErrors } from "~/components/ui/field-error";
-import { parseFormData } from "~/lib/form-data";
+import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { createPostSchema } from "~/lib/schemas/post";
 import { api } from "~/trpc/react";
 
@@ -35,8 +35,7 @@ export function LatestPost() {
             createPostSchema,
           );
           if (!parsed.success) {
-            const errors = parsed.error.flatten().fieldErrors;
-            setFieldErrors(errors);
+            setFieldErrors(getFieldErrors(parsed));
             return;
           }
           createPost.mutate(parsed.data);

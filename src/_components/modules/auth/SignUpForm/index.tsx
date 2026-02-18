@@ -9,7 +9,7 @@ import { FieldError } from "~/components/ui/field-error";
 import { FormError } from "~/components/ui/form-error";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { parseFormData } from "~/lib/form-data";
+import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { signUpSchema } from "~/lib/schemas/auth";
 import { api } from "~/trpc/react";
 
@@ -49,7 +49,7 @@ export function SignUpForm() {
     const parsed = parseFormData(formData, signUpSchema);
 
     if (!parsed.success) {
-      const errors = parsed.error.flatten().fieldErrors as FieldErrors;
+      const errors = getFieldErrors(parsed) as FieldErrors;
       setFieldErrors(errors);
 
       return;

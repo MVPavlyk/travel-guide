@@ -9,7 +9,7 @@ import { FieldError, type FieldErrors } from "~/components/ui/field-error";
 import { FormError } from "~/components/ui/form-error";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { parseFormData } from "~/lib/form-data";
+import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { credentialsSchema } from "~/lib/schemas/auth";
 import { useRouter } from "next/navigation";
 
@@ -23,8 +23,7 @@ export function SignInForm() {
       const parsed = parseFormData(formData, credentialsSchema);
 
       if (!parsed.success) {
-        const fieldErrors = parsed.error.flatten().fieldErrors;
-        return { fieldErrors };
+        return { fieldErrors: getFieldErrors(parsed) };
       }
 
       const { email, password } = parsed.data;

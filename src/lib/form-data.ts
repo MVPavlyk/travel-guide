@@ -29,3 +29,14 @@ export function parseFormData<T>(
         error: { flatten: () => { fieldErrors: Record<string, string[]> } };
       };
 }
+
+type ParsedWithFieldErrors = {
+  success: false;
+  error: { flatten: () => { fieldErrors: Record<string, string[]> } };
+};
+
+export function getFieldErrors(
+  parsed: ParsedWithFieldErrors,
+): Record<string, string[]> {
+  return parsed.error.flatten().fieldErrors;
+}
