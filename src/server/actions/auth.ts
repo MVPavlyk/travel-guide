@@ -1,26 +1,29 @@
 "use server";
 
-import { firstFieldError, parseFormData } from "~/lib/form-data";
+import { parseFormData } from "~/lib/form-data";
 import { signUpSchema } from "~/lib/schemas/auth";
 import { hashPassword } from "~/lib/auth/password";
 import { db } from "~/server/db";
 
-export type SignUpState =
-  | { success: true }
-  | { success: false; error: string; field?: string };
+export type FieldErrors = Record<string, string[]>;
+
+export type AuthState =
+  | { success: true; fieldErrors?: undefined; formError?: undefined }
+  | {
+      success: false;
+      fieldErrors?: FieldErrors;
+      formError?: string;
+    };
 
 export async function signUp(
-  _prev: SignUpState | null,
-  formData: FormData
-): Promise<SignUpState> {
+  _prev: AuthState | null,
+  formData: FormData,
+): Promise<AuthState> {
   const parsed = parseFormData(formData, signUpSchema);
   if (!parsed.success) {
-    const fieldErrors = parsed.error.flatten().fieldErrors;
-    const field = Object.keys(fieldErrors)[0] ?? "email";
     return {
       success: false,
-      error: firstFieldError(fieldErrors),
-      field,
+      fieldErrors: parsed.error.flatten().fieldErrors as FieldErrors,
     };
   }
 
@@ -30,22 +33,32 @@ export async function signUp(
   const existing = await db.user.findUnique({
     where: { email: normalizedEmail },
   });
+
   if (existing) {
     return {
       success: false,
-      error: "An account with this email already exists",
-      field: "email",
+      formError: "An account with this email already exists",
     };
   }
 
   const hashed = await hashPassword(password);
-  await db.user.create({
-    data: {
-      email: normalizedEmail,
-      password: hashed,
-      name: typeof name === "string" ? name : null,
-    },
-  });
+
+  try {
+    await db.user.create({
+      data: {
+        email: normalizedEmail,
+        password: hashed,
+        name: typeof name === "string" ? name : null,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+
+    return {
+      success: false,
+      formError: "Something went wrong. Please try again.",
+    };
+  }
 
   return { success: true };
 }

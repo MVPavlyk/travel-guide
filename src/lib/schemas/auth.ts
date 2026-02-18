@@ -16,7 +16,7 @@ export const signUpSchema = z.object({
   password: passwordSchema,
   name: z.preprocess(
     (val) => (val === "" ? undefined : val),
-    z.string().min(1, "Name is required").max(100).optional()
+    z.string().min(1, "Name is required").max(100).optional(),
   ),
 });
 

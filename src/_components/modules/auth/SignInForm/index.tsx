@@ -5,49 +5,59 @@ import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 
 import { Button } from "~/components/ui/button";
+import { FieldError, type FieldErrors } from "~/components/ui/field-error";
+import { FormError } from "~/components/ui/form-error";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { firstFieldError, parseFormData } from "~/lib/form-data";
+import { parseFormData } from "~/lib/form-data";
 import { credentialsSchema } from "~/lib/schemas/auth";
+import { useRouter } from "next/navigation";
+
+type SignInState = { fieldErrors?: FieldErrors; formError?: string } | null;
 
 export function SignInForm() {
+  const router = useRouter();
+
   const [state, formAction, isPending] = useActionState(
-    async (_prev: { error?: string } | null, formData: FormData) => {
+    async (_prev: SignInState, formData: FormData) => {
       const parsed = parseFormData(formData, credentialsSchema);
+
       if (!parsed.success) {
-        const message = firstFieldError(
-          parsed.error.flatten().fieldErrors,
-          "Invalid email or password"
-        );
-        toast.error(message);
-        return { error: message };
+        const fieldErrors = parsed.error.flatten().fieldErrors;
+        return { fieldErrors };
       }
 
       const { email, password } = parsed.data;
+
       const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
       });
+
       if (result?.error) {
-        const message = "Invalid email or password";
-        toast.error(message);
-        return { error: message };
+        const formError = "Invalid email or password";
+        toast.error(formError);
+        return { formError };
       }
+
       if (result?.ok) {
         toast.success("Signed in successfully");
-        window.location.href = "/";
+        router.push("/");
         return null;
       }
-      const message = "Something went wrong";
-      toast.error(message);
-      return { error: message };
+
+      return null;
     },
-    null
+    null,
   );
+
+  const fieldErrors = state?.fieldErrors;
+  const formError = state?.formError;
 
   return (
     <form action={formAction} className="grid gap-4">
+      <FormError message={formError} />
       <div className="grid gap-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -55,10 +65,11 @@ export function SignInForm() {
           name="email"
           type="email"
           placeholder="you@example.com"
-          autoComplete="email"
           required
           disabled={isPending}
+          aria-invalid={!!fieldErrors?.email}
         />
+        <FieldError name="email" fieldErrors={fieldErrors} />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="password">Password</Label>
@@ -69,13 +80,10 @@ export function SignInForm() {
           autoComplete="current-password"
           required
           disabled={isPending}
+          aria-invalid={!!fieldErrors?.password}
         />
+        <FieldError name="password" fieldErrors={fieldErrors} />
       </div>
-      {state?.error && (
-        <p className="text-sm text-destructive" role="alert">
-          {state.error}
-        </p>
-      )}
       <Button type="submit" className="w-full" disabled={isPending}>
         {isPending ? "Signing in…" : "Sign in"}
       </Button>

@@ -8,7 +8,7 @@ function getKeys(schema: SchemaWithShape): string[] {
 
 export function formDataToObject(
   formData: FormData,
-  schema: SchemaWithShape
+  schema: SchemaWithShape,
 ): Record<string, string> {
   const result: Record<string, string> = {};
   for (const key of getKeys(schema)) {
@@ -20,18 +20,21 @@ export function formDataToObject(
 
 export function parseFormData<T>(
   formData: FormData,
-  schema: ZodType<T> & SchemaWithShape
+  schema: ZodType<T> & SchemaWithShape,
 ) {
-  return schema.safeParse(
-    formDataToObject(formData, schema)
-  ) as { success: true; data: T } | { success: false; error: { flatten: () => { fieldErrors: Record<string, string[]> } } };
+  return schema.safeParse(formDataToObject(formData, schema)) as
+    | { success: true; data: T }
+    | {
+        success: false;
+        error: { flatten: () => { fieldErrors: Record<string, string[]> } };
+      };
 }
 
-export function firstFieldError(
-  fieldErrors: Record<string, string[] | undefined>,
-  fallback = "Invalid input"
+export function getFirstErrorMessage(
+  fieldErrors: Record<string, string[] | undefined> | undefined | null,
+  fallback = "Invalid input",
 ): string {
-  const key = Object.keys(fieldErrors)[0];
-  const message = key ? fieldErrors[key]?.[0] : undefined;
-  return message ?? fallback;
+  if (!fieldErrors) return fallback;
+  const first = Object.values(fieldErrors).flat()[0];
+  return first ?? fallback;
 }

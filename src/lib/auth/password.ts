@@ -14,7 +14,7 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(
   password: string,
-  stored: string
+  stored: string,
 ): Promise<boolean> {
   const [salt, keyHex] = stored.split(":");
   if (!salt || !keyHex) return false;

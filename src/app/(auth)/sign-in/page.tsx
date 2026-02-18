@@ -24,26 +24,29 @@ export default function SignInPage() {
         <SignInForm />
         <div className="relative">
           <span className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-border" />
+            <span className="border-border w-full border-t" />
           </span>
-          <span className="relative flex justify-center text-xs uppercase text-muted-foreground">
+          <span className="text-muted-foreground relative flex justify-center text-xs uppercase">
             or
           </span>
         </div>
         <Link
           href="/api/auth/signin/discord"
-          className={buttonVariants({ variant: "outline", className: "w-full" })}
+          className={buttonVariants({
+            variant: "outline",
+            className: "w-full",
+          })}
         >
           Sign in with Discord
         </Link>
       </CardContent>
-      <CardFooter className="flex flex-col gap-2 text-center text-sm text-muted-foreground">
+      <CardFooter className="text-muted-foreground flex flex-col gap-2 text-center text-sm">
         <span>Don&apos;t have an account?</span>
         <Link
           href="/sign-up"
           className={buttonVariants({
             variant: "link",
-            className: "h-auto p-0 text-primary",
+            className: "text-primary h-auto p-0",
           })}
         >
           Sign up

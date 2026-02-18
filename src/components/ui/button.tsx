@@ -8,8 +8,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles = {
-  default:
-    "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+  default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
   secondary:
     "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
   outline:
@@ -38,7 +37,7 @@ export function buttonVariants({
     "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
     variantStyles[variant],
     sizeStyles[size],
-    className
+    className,
   );
 }
 
@@ -51,19 +50,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type = "button",
       ...props
     },
-    ref
+    ref,
   ) => (
     <button
       ref={ref}
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "focus-visible:ring-ring inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
         variantStyles[variant],
         sizeStyles[size],
-        className
+        className,
       )}
       {...props}
     />
-  )
+  ),
 );
 Button.displayName = "Button";
