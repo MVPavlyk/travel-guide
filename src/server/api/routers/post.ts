@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { createPostSchema } from "~/lib/schemas/post";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -16,7 +17,7 @@ export const postRouter = createTRPCRouter({
     }),
 
   create: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
+    .input(createPostSchema)
     .mutation(async ({ ctx, input }) => {
       return ctx.db.post.create({
         data: {
