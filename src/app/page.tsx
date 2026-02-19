@@ -1,3 +1,4 @@
+import { AppFooter } from "~/app/_components/AppFooter";
 import { AppHeader } from "~/app/_components/AppHeader";
 import { Pagination } from "~/app/_components/Pagination";
 import { PostCard } from "~/app/_components/PostCard";
@@ -22,15 +23,19 @@ export default async function Home({ searchParams }: Props) {
   });
 
   return (
-    <main className="flex min-h-screen flex-col bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+    <main className="flex min-h-screen flex-col bg-background">
       <AppHeader variant="home" session={session} />
 
-      <div className="container mx-auto flex flex-1 flex-col px-4 py-8">
-        <h1 className="mb-6 text-3xl font-bold">Posts</h1>
+      <section className="flex h-[320px] w-full items-center justify-center bg-gray-100">
+        <h2 className="text-5xl font-bold text-gray-800">Travel with us</h2>
+      </section>
+
+      <div className="flex flex-1 flex-col px-60 py-32">
+        <h1 className="mb-6 text-3xl font-bold text-gray-700">Posts</h1>
         {posts.length === 0 ? (
-          <p className="text-white/80">No posts yet.</p>
+          <p className="text-gray-600">No posts yet.</p>
         ) : (
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-3 gap-10">
             {posts.map((post) => (
               <li key={post.id}>
                 <PostCard post={post} />
@@ -44,6 +49,7 @@ export default async function Home({ searchParams }: Props) {
           perPage={PER_PAGE}
         />
       </div>
+      <AppFooter />
     </main>
   );
 }

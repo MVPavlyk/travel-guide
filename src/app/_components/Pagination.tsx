@@ -12,24 +12,24 @@ export function Pagination({ total, currentPage, perPage }: Props) {
 
   return (
     <nav
-      className="flex items-center justify-center gap-2 py-6"
+      className="mt-12 flex w-full items-center justify-center gap-2"
       aria-label="Pagination"
     >
       {currentPage > 1 && (
         <Link
           href={currentPage === 2 ? "/" : `/?page=${currentPage - 1}`}
-          className="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20"
+          className="flex h-8 min-w-[2.25rem] items-center justify-center rounded-[5px] bg-gray-700 px-4 text-xs text-white no-underline hover:bg-gray-800"
         >
           Previous
         </Link>
       )}
-      <span className="text-white/80">
+      <span className="text-gray-700">
         Page {currentPage} of {totalPages}
       </span>
       {currentPage < totalPages && (
         <Link
           href={`/?page=${currentPage + 1}`}
-          className="rounded-lg bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20"
+          className="flex h-8 min-w-[2.25rem] items-center justify-center rounded-[5px] bg-gray-700 px-4 text-xs text-white no-underline hover:bg-gray-800"
         >
           Next
         </Link>

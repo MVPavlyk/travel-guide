@@ -74,7 +74,7 @@ export function CreatePostForm() {
           disabled={createPost.isPending}
           aria-invalid={!!fieldErrors?.content}
           className={cn(
-            "border-input placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-sm transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+            "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-foreground placeholder:text-gray-500 shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-iris-100 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
           )}
         />
         <FieldError name="content" fieldErrors={fieldErrors} />

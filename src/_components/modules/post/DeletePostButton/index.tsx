@@ -27,7 +27,7 @@ export function DeletePostButton({ postId }: Props) {
       type="button"
       variant="outline"
       size="sm"
-      className="border-white/30 text-white hover:bg-white/10"
+      className="border-gray-300 text-gray-700 hover:bg-gray-100"
       disabled={deletePost.isPending}
       onClick={() => deletePost.mutate({ postId })}
     >

@@ -9,18 +9,18 @@ type Session = { user?: { name?: string | null } | null } | null;
 export function HomeAuthBlock({ session }: { session: Session }) {
   if (session?.user) {
     return (
-      <>
-        <p className="text-center text-2xl text-white">
-          Logged in as {session.user?.name}
-        </p>
-        <SignOutButton className="rounded-full bg-white/10 px-10 py-3 font-semibold hover:bg-white/20" />
-      </>
+      <div className="flex items-center gap-4">
+        <span className="text-gray-700">
+          {session.user?.name ?? "Logged in"}
+        </span>
+        <SignOutButton className="rounded-[5px] border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100" />
+      </div>
     );
   }
   return (
     <Link
       href="/sign-in"
-      className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+      className="text-xl text-iris-100 no-underline hover:underline"
     >
       Sign in
     </Link>

@@ -6,27 +6,33 @@ type Session = { user?: { name?: string | null } | null } | null;
 
 type Props = { variant: "home"; session: Session } | { variant: "back" };
 
-const linkClass =
-  "rounded-full bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20";
-
 export function AppHeader(props: Props) {
   return (
-    <header className="flex items-center justify-between border-b border-white/10 px-4 py-4">
-      <Link href="/" className="text-xl font-bold">
+    <header className="flex h-20 w-full items-center justify-between bg-gray-100 px-60">
+      <Link
+        href="/"
+        className="text-xl font-bold text-gray-800 no-underline hover:underline"
+      >
         Travel Guide
       </Link>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         {props.variant === "home" ? (
           <>
             <HomeAuthBlock session={props.session} />
             {props.session?.user && (
-              <Link href="/create-post" className={linkClass}>
+              <Link
+                href="/create-post"
+                className="text-xl text-iris-100 no-underline hover:underline"
+              >
                 New post
               </Link>
             )}
           </>
         ) : (
-          <Link href="/" className={linkClass}>
+          <Link
+            href="/"
+            className="text-gray-800 no-underline hover:underline"
+          >
             Back to posts
           </Link>
         )}

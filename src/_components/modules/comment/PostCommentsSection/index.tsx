@@ -21,18 +21,18 @@ export function PostCommentsSection({ postId, session }: Props) {
 
   return (
     <section className="space-y-6">
-      <h2 className="text-xl font-semibold">Comments</h2>
+      <h2 className="text-xl font-semibold text-gray-800">Comments</h2>
 
       {session?.user && (
-        <div className="rounded-lg border border-white/20 bg-white/5 p-4">
+        <div className="rounded-lg border border-gray-300 bg-gray-100 p-4">
           <CreateCommentForm postId={postId} />
         </div>
       )}
 
       {isLoading ? (
-        <p className="text-white/70">Loading comments…</p>
+        <p className="text-gray-600">Loading comments…</p>
       ) : !comments?.length ? (
-        <p className="text-white/70">No comments yet.</p>
+        <p className="text-gray-600">No comments yet.</p>
       ) : (
         <ul className="flex flex-col gap-3">
           {comments.map((comment) => (

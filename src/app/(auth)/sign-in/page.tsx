@@ -13,10 +13,10 @@ import { SignInForm } from "~/_components/modules/auth/SignInForm";
 
 export default function SignInPage() {
   return (
-    <Card>
+    <Card className="border border-gray-300">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">Sign in</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-2xl text-gray-800">Sign in</CardTitle>
+        <CardDescription className="text-gray-600">
           Sign in with email and password or Discord
         </CardDescription>
       </CardHeader>
@@ -24,9 +24,9 @@ export default function SignInPage() {
         <SignInForm />
         <div className="relative">
           <span className="absolute inset-0 flex items-center">
-            <span className="border-border w-full border-t" />
+            <span className="w-full border-t border-gray-300" />
           </span>
-          <span className="text-muted-foreground relative flex justify-center text-xs uppercase">
+          <span className="relative flex justify-center text-xs uppercase text-gray-600">
             or
           </span>
         </div>
@@ -40,7 +40,7 @@ export default function SignInPage() {
           Sign in with Discord
         </Link>
       </CardContent>
-      <CardFooter className="text-muted-foreground flex flex-col gap-2 text-center text-sm">
+      <CardFooter className="flex flex-col gap-2 text-center text-sm text-gray-600">
         <span>Don&apos;t have an account?</span>
         <Link
           href="/sign-up"
