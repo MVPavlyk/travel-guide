@@ -22,7 +22,7 @@ export function LatestPost() {
   return (
     <div className="w-full max-w-xs">
       {latestPost ? (
-        <p className="truncate">Your most recent post: {latestPost.name}</p>
+        <p className="truncate">Your most recent post: {latestPost.title}</p>
       ) : (
         <p>You have no posts yet.</p>
       )}
@@ -44,13 +44,21 @@ export function LatestPost() {
       >
         <div className="grid gap-2">
           <input
-            name="name"
+            name="title"
             type="text"
             placeholder="Title"
             className="w-full rounded-full bg-white/10 px-4 py-2 text-white"
-            aria-invalid={!!fieldErrors?.name}
+            aria-invalid={!!fieldErrors?.title}
           />
-          <FieldError name="name" fieldErrors={fieldErrors} />
+          <FieldError name="title" fieldErrors={fieldErrors} />
+          <textarea
+            name="content"
+            placeholder="Content"
+            rows={3}
+            className="w-full rounded-full bg-white/10 px-4 py-2 text-white"
+            aria-invalid={!!fieldErrors?.content}
+          />
+          <FieldError name="content" fieldErrors={fieldErrors} />
         </div>
         <button
           type="submit"

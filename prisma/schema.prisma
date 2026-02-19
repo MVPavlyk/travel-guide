@@ -10,14 +10,28 @@ datasource db {
 
 model Post {
     id        Int      @id @default(autoincrement())
-    name      String
+    title     String
+    content   String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdBy   User      @relation(fields: [createdById], references: [id], onDelete: Cascade)
     createdById String
+    comments    Comment[]
 
-    @@index([name])
+    @@index([title])
+}
+
+model Comment {
+    id        Int      @id @default(autoincrement())
+    text      String
+    postId    Int
+    userId    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
@@ -57,6 +71,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    comments      Comment[]
 }
 
 model VerificationToken {
