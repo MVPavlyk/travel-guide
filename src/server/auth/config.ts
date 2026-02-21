@@ -57,8 +57,8 @@ export const authConfig: NextAuthConfig = {
       ...session,
       user: {
         id: (token.sub ?? token.id) as string,
-        email: (token.email ?? session.user.email) ?? "",
-        name: (token.name ?? session.user.name) ?? "",
+        email: token.email ?? session.user.email ?? "",
+        name: token.name ?? session.user.name ?? "",
       },
     }),
   },

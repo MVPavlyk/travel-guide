@@ -1,8 +1,8 @@
 import type { Session } from "next-auth";
 import type { ReactNode } from "react";
 
-import { AppFooter } from "~/app/_components/AppFooter";
-import { AppHeader } from "~/app/_components/AppHeader";
+import { AppFooter } from "~/_components/modules/common/AppFooter";
+import { AppHeader } from "~/_components/modules/common/AppHeader";
 
 type Props = { children: ReactNode; session: Session | null };
 

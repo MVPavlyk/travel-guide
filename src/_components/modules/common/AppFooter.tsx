@@ -1,4 +1,4 @@
-import { NavLink } from "~/app/_components/NavLink";
+import { NavLink } from "~/_components/modules/common/NavLink";
 import type { Session } from "next-auth";
 
 type Props = { session: Session | null };
@@ -8,7 +8,11 @@ export function AppFooter({ session }: Props) {
     <footer className="flex w-full flex-col items-center justify-center gap-4 bg-gray-800 px-60 py-12 text-white">
       <p className="text-lg font-bold">Travel Guide</p>
       <div className="flex gap-6 text-sm">
-        <NavLink href="/" variant="link" className="text-white hover:underline">
+        <NavLink
+          href="/public"
+          variant="link"
+          className="text-white hover:underline"
+        >
           Home
         </NavLink>
         {session?.user ? (

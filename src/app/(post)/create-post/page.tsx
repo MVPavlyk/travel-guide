@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { AppLayout } from "~/app/_components/AppLayout";
+import { AppLayout } from "~/_components/modules/common/AppLayout";
 import { CreatePostForm } from "~/_components/modules/post/CreatePostForm";
 import { auth } from "~/server/auth";
 

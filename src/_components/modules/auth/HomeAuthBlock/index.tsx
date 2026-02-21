@@ -2,16 +2,14 @@
 
 import type { Session } from "next-auth";
 
-import { NavLink } from "~/app/_components/NavLink";
+import { NavLink } from "~/_components/modules/common/NavLink";
 import { SignOutButton } from "~/_components/modules/auth/SignOutButton";
 
 export function HomeAuthBlock({ session }: { session: Session | null }) {
   if (session?.user) {
     return (
       <div className="flex items-center gap-3">
-        <span className="px-2 text-sm text-gray-600">
-          {session.user.name}
-        </span>
+        <span className="px-2 text-sm text-gray-600">{session.user.name}</span>
         <SignOutButton />
       </div>
     );

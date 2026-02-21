@@ -1,4 +1,4 @@
-import { NavLink } from "~/app/_components/NavLink";
+import { NavLink } from "~/_components/modules/common/NavLink";
 import {
   Card,
   CardContent,

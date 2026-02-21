@@ -1,5 +1,5 @@
-import { AppLayout } from "~/app/_components/AppLayout";
-import { Pagination } from "~/app/_components/Pagination";
+import { AppLayout } from "~/_components/modules/common/AppLayout";
+import { Pagination } from "~/_components/modules/common/Pagination";
 import { PostCard } from "~/_components/modules/post/PostCard";
 import { auth } from "~/server/auth";
 import { serverCaller } from "~/trpc/server";

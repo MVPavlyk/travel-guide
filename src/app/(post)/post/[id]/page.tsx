@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { TRPCError } from "@trpc/server";
 
-import { AppLayout } from "~/app/_components/AppLayout";
+import { AppLayout } from "~/_components/modules/common/AppLayout";
 import { PostCommentsSection } from "~/_components/modules/comment/PostCommentsSection";
 import { DeletePostButton } from "~/_components/modules/post/DeletePostButton";
 import { auth } from "~/server/auth";
