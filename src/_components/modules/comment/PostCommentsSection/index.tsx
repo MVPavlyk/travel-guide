@@ -4,23 +4,15 @@ import type { Session } from "next-auth";
 
 import { CreateCommentForm } from "~/_components/modules/comment/CreateCommentForm";
 import { CommentCard } from "~/_components/modules/comment/CommentCard";
-import { api, type Comment } from "~/trpc/react";
+import { api } from "~/trpc/react";
 
 type Props = {
   postId: number;
   session: Session | null;
-  comments: Comment[];
 };
 
-export function PostCommentsSection({
-  postId,
-  session,
-  comments: initialComments,
-}: Props) {
-  const { data: comments } = api.comment.getByPostId.useQuery(
-    { postId },
-    { initialData: initialComments },
-  );
+export function PostCommentsSection({ postId, session }: Props) {
+  const { data: comments } = api.comment.getByPostId.useQuery({ postId });
 
   const currentUserId = session?.user?.id ?? null;
 
