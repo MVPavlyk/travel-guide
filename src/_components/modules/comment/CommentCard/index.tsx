@@ -3,22 +3,7 @@
 import { toast } from "sonner";
 
 import { Button } from "~/components/ui/button";
-import { api } from "~/trpc/react";
-
-type Comment = {
-  id: number;
-  text: string;
-  postId: number;
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  user: {
-    id: string;
-    name: string | null;
-    email: string | null;
-    image: string | null;
-  };
-};
+import { api, type Comment } from "~/trpc/react";
 
 type Props = {
   comment: Comment;

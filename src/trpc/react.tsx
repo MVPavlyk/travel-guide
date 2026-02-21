@@ -38,6 +38,9 @@ export type RouterInputs = inferRouterInputs<AppRouter>;
  */
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
+export type Comment = RouterOutputs["comment"]["getByPostId"][number];
+export type Post = RouterOutputs["post"]["getPaginated"]["posts"][number];
+
 export function TRPCReactProvider(props: { children: ReactNode }) {
   const queryClient = getQueryClient();
 

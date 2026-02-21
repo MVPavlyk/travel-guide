@@ -1,12 +1,5 @@
 import { NavLink } from "~/app/_components/NavLink";
-
-type Post = {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: Date;
-  createdBy: { id: string; name: string | null; email: string | null };
-};
+import type { Post } from "~/trpc/react";
 
 export function PostCard({ post }: { post: Post }) {
   const excerpt =

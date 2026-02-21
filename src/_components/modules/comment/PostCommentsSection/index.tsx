@@ -4,22 +4,7 @@ import type { Session } from "next-auth";
 
 import { CreateCommentForm } from "~/_components/modules/comment/CreateCommentForm";
 import { CommentCard } from "~/_components/modules/comment/CommentCard";
-import { api } from "~/trpc/react";
-
-type Comment = {
-  id: number;
-  text: string;
-  postId: number;
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  user: {
-    id: string;
-    name: string | null;
-    email: string | null;
-    image: string | null;
-  };
-};
+import { api, type Comment } from "~/trpc/react";
 
 type Props = {
   postId: number;

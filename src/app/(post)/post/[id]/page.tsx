@@ -6,6 +6,7 @@ import { PostCommentsSection } from "~/_components/modules/comment/PostCommentsS
 import { DeletePostButton } from "~/_components/modules/post/DeletePostButton";
 import { auth } from "~/server/auth";
 import { serverCaller } from "~/trpc/server";
+import type { Post } from "~/trpc/react";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -17,7 +18,7 @@ export default async function PostPage({ params }: Props) {
   const postId = Number(id);
   if (!Number.isInteger(postId) || postId < 1) notFound();
 
-  let post: Awaited<ReturnType<typeof serverCaller.post.getById>>;
+  let post: Post;
   try {
     post = await serverCaller.post.getById({ id: postId });
   } catch (err) {
