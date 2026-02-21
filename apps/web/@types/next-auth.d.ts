@@ -7,25 +7,27 @@ export interface AuthCredentialsInputs extends Record<
 }
 
 declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      image?: string | null;
+    };
+  }
+
   interface User {
     id: string;
     name: string;
     email: string;
-    firstName?: string;
-    lastName?: string;
-    avatarUrl?: string;
-    role?: string;
-  }
-
-  interface Session {
-    user: User;
+    image?: string | null;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
-    id?: string;
-    email?: string;
-    name?: string;
+    id: string;
+    name: string;
+    email: string;
   }
 }

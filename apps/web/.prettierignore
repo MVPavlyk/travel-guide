@@ -1,0 +1,20 @@
+# Dependencies
+node_modules
+
+# Generated (Prisma client, etc.)
+generated
+
+# Build / cache
+.next
+out
+.turbo
+*.tsbuildinfo
+
+# Lockfiles, env
+yarn.lock
+package-lock.json
+.env
+.env.*
+
+# Prisma migrations (optional: uncomment if you don't want migrations formatted)
+# prisma/migrations

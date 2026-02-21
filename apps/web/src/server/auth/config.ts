@@ -3,10 +3,10 @@ import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 
-import type { AuthCredentialsInputs } from "~/types/auth";
 import { credentialsSchema } from "~/lib/schemas/auth";
 import { verifyPassword } from "~/lib/auth/password";
 import { db } from "~/server/db";
+import type { AuthCredentialsInputs } from "../../../@types/next-auth";
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -33,7 +33,7 @@ export const authConfig: NextAuthConfig = {
         if (!ok) return null;
         return {
           id: user.id,
-          email: user.email ?? "",
+          email: user.email,
           name: user.name,
         };
       },
@@ -47,18 +47,18 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     jwt: ({ token, user }) => {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        token.name = user.name;
+        token.id = user.id!;
+        token.email = user.email!;
+        token.name = user.name!;
       }
       return token;
     },
     session: ({ session, token }) => ({
       ...session,
       user: {
-        id: (token.sub ?? token.id) as string,
-        email: token.email ?? session.user.email ?? "",
-        name: token.name ?? session.user.name ?? "",
+        id: token.sub ?? token.id,
+        email: token.email ?? session.user.email,
+        name: token.name ?? session.user.name,
       },
     }),
   },
