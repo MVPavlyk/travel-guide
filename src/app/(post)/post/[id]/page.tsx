@@ -27,7 +27,7 @@ export default async function PostPage({ params }: Props) {
   }
 
   const comments = await serverCaller.comment.getByPostId({ postId });
-  const isAuthor = session?.user?.id === post.createdById;
+  const isAuthor = session?.user?.id === post.userId;
 
   return (
     <AppLayout session={session}>
@@ -35,8 +35,7 @@ export default async function PostPage({ params }: Props) {
         <div className="flex flex-1 flex-col">
           <h1 className="text-4xl font-bold text-gray-800">{post.title}</h1>
           <p className="mt-4 text-gray-600">
-            {post.createdBy.name} ·{" "}
-            {new Date(post.createdAt).toLocaleDateString()}
+            {post.user.name} · {new Date(post.createdAt).toLocaleDateString()}
           </p>
         </div>
       </div>

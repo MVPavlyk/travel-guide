@@ -15,9 +15,9 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  createdBy   User      @relation(fields: [createdById], references: [id], onDelete: Cascade)
-  createdById String
-  comments    Comment[]
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  comments Comment[]
 
   @@index([title])
 }
@@ -66,6 +66,7 @@ model User {
   name          String
   email         String?   @unique
   emailVerified DateTime?
+  image         String?
   password      String?
   accounts      Account[]
   sessions      Session[]

@@ -21,7 +21,7 @@ export const postRouter = createTRPCRouter({
         data: {
           title: input.title,
           content: input.content,
-          createdBy: { connect: { id: ctx.session.user.id } },
+          user: { connect: { id: ctx.session.user.id } },
         },
       });
     }),
@@ -36,7 +36,7 @@ export const postRouter = createTRPCRouter({
           take: input.perPage,
           orderBy: { createdAt: "desc" },
           include: {
-            createdBy: {
+            user: {
               select: { id: true, name: true, email: true },
             },
           },
@@ -52,7 +52,7 @@ export const postRouter = createTRPCRouter({
       const post = await ctx.db.post.findUnique({
         where: { id: input.id },
         include: {
-          createdBy: {
+          user: {
             select: { id: true, name: true, email: true },
           },
         },
@@ -66,11 +66,11 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const post = await ctx.db.post.findUnique({
         where: { id: input.postId },
-        select: { createdById: true },
+        select: { userId: true },
       });
       if (!post)
         throw new TRPCError({ code: "NOT_FOUND", message: "Post not found" });
-      if (post.createdById !== ctx.session.user.id)
+      if (post.userId !== ctx.session.user.id)
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You can only delete your own post",
