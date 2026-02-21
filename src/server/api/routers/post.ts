@@ -14,14 +14,6 @@ const paginationInput = z.object({
 });
 
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   create: protectedProcedure
     .input(createPostSchema)
     .mutation(async ({ ctx, input }) => {
@@ -45,7 +37,7 @@ export const postRouter = createTRPCRouter({
           orderBy: { createdAt: "desc" },
           include: {
             createdBy: {
-              select: { id: true, name: true, email: true, image: true },
+              select: { id: true, name: true, email: true },
             },
           },
         }),
@@ -61,7 +53,7 @@ export const postRouter = createTRPCRouter({
         where: { id: input.id },
         include: {
           createdBy: {
-            select: { id: true, name: true, email: true, image: true },
+            select: { id: true, name: true, email: true },
           },
         },
       });
@@ -86,17 +78,4 @@ export const postRouter = createTRPCRouter({
       await ctx.db.post.delete({ where: { id: input.postId } });
       return { ok: true };
     }),
-
-  getLatest: protectedProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
-
-    return post ?? null;
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
 });

@@ -66,7 +66,7 @@ export function SignUpForm() {
     <form onSubmit={handleSubmit} className="grid gap-4">
       <FormError message={formError} />
       <div className="grid gap-2">
-        <Label htmlFor="name">Name (optional)</Label>
+        <Label htmlFor="name">Name</Label>
         <Input
           id="name"
           name="name"

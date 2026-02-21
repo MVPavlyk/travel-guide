@@ -1,5 +1,3 @@
-import type { DefaultSession } from "next-auth";
-
 export interface AuthCredentialsInputs extends Record<
   string,
   { label?: string; type?: string }
@@ -9,15 +7,25 @@ export interface AuthCredentialsInputs extends Record<
 }
 
 declare module "next-auth" {
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+    firstName?: string;
+    lastName?: string;
+    avatarUrl?: string;
+    role?: string;
+  }
+
   interface Session {
-    user: {
-      id: string;
-    } & DefaultSession["user"];
+    user: User;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
+    email?: string;
+    name?: string;
   }
 }

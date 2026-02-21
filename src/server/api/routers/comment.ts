@@ -17,7 +17,7 @@ export const commentRouter = createTRPCRouter({
         orderBy: { createdAt: "desc" },
         include: {
           user: {
-            select: { id: true, name: true, email: true, image: true },
+            select: { id: true, name: true, email: true },
           },
         },
       });
@@ -39,11 +39,11 @@ export const commentRouter = createTRPCRouter({
         data: {
           text: input.text,
           postId: input.postId,
-          userId: ctx.session.user.id,
+          userId: ctx.session.user.id as string,
         },
         include: {
           user: {
-            select: { id: true, name: true, email: true, image: true },
+            select: { id: true, name: true, email: true },
           },
         },
       });

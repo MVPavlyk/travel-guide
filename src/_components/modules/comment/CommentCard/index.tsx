@@ -23,7 +23,7 @@ export function CommentCard({ comment, currentUserId }: Props) {
   });
 
   const canDelete = currentUserId != null && comment.userId === currentUserId;
-  const authorName = comment.user.name ?? comment.user.email;
+  const authorName = comment.user.name;
 
   return (
     <div className="rounded-lg border border-gray-300 bg-white p-4 shadow-sm">

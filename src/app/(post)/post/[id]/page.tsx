@@ -35,7 +35,7 @@ export default async function PostPage({ params }: Props) {
         <div className="flex flex-1 flex-col">
           <h1 className="text-4xl font-bold text-gray-800">{post.title}</h1>
           <p className="mt-4 text-gray-600">
-            {post.createdBy.name ?? post.createdBy.email ?? "Anonymous"} ·{" "}
+            {post.createdBy.name} ·{" "}
             {new Date(post.createdAt).toLocaleDateString()}
           </p>
         </div>

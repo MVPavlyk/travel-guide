@@ -19,7 +19,7 @@ export function PostCard({ post }: { post: Post }) {
         </NavLink>
       </h2>
       <p className="mt-1 text-gray-600">
-        {post.createdBy.name ?? post.createdBy.email ?? "Anonymous"} ·{" "}
+        {post.createdBy.name} ·{" "}
         {new Date(post.createdAt).toLocaleDateString()}
       </p>
       <hr className="my-5 h-px border-0 bg-gray-300" />

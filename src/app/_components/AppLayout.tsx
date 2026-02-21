@@ -13,7 +13,7 @@ export function AppLayout({ children, session }: Props) {
         <AppHeader session={session} />
         {children}
       </main>
-      <AppFooter />
+      <AppFooter session={session} />
     </>
   );
 }

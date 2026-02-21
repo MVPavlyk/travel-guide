@@ -10,7 +10,7 @@ export function HomeAuthBlock({ session }: { session: Session | null }) {
     return (
       <div className="flex items-center gap-3">
         <span className="px-2 text-sm text-gray-600">
-          {session.user?.name ?? "Logged in"}
+          {session.user.name}
         </span>
         <SignOutButton />
       </div>
