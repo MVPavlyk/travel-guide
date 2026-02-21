@@ -5,7 +5,7 @@ import { AppLayout } from "~/_components/modules/common/AppLayout";
 import { PostCommentsSection } from "~/_components/modules/comment/PostCommentsSection";
 import { DeletePostButton } from "~/_components/modules/post/DeletePostButton";
 import { auth } from "~/server/auth";
-import { serverCaller } from "~/trpc/server";
+import { api, HydrateClient, serverCaller } from "~/trpc/server";
 import type { Post } from "~/trpc/react";
 
 type Props = {
@@ -26,7 +26,7 @@ export default async function PostPage({ params }: Props) {
     throw err;
   }
 
-  const comments = await serverCaller.comment.getByPostId({ postId });
+  await api.comment.getByPostId.prefetch({ postId });
   const isAuthor = session?.user?.id === post.userId;
 
   return (
@@ -53,11 +53,9 @@ export default async function PostPage({ params }: Props) {
       </article>
 
       <section className="max-w-2xl px-60 pb-16">
-        <PostCommentsSection
-          postId={postId}
-          session={session}
-          comments={comments}
-        />
+        <HydrateClient>
+          <PostCommentsSection postId={postId} session={session} />
+        </HydrateClient>
       </section>
     </AppLayout>
   );
