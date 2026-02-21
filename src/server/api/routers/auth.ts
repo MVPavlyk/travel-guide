@@ -7,10 +7,7 @@ export const authRouter = createTRPCRouter({
     .input(signUpSchema)
     .mutation(async ({ ctx, input }) => {
       const normalizedEmail = input.email.trim().toLowerCase();
-      const name =
-        typeof input.name === "string" && input.name.trim()
-          ? input.name.trim()
-          : null;
+      const name = input.name.trim();
 
       const existing = await ctx.db.user.findUnique({
         where: { email: normalizedEmail },
@@ -30,7 +27,7 @@ export const authRouter = createTRPCRouter({
           data: {
             email: normalizedEmail,
             password: hashed,
-            name,
+            name: name,
           },
         });
       } catch {

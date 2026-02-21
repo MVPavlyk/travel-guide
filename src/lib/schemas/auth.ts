@@ -14,10 +14,7 @@ export const credentialsSchema = z.object({
 export const signUpSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
-  name: z.preprocess(
-    (val) => (val === "" ? undefined : val),
-    z.string().min(1, "Name is required").max(100).optional(),
-  ),
+  name: z.string().min(1, "Name is required").max(100).trim(),
 });
 
 export type CredentialsInput = z.infer<typeof credentialsSchema>;

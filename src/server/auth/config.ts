@@ -8,7 +8,7 @@ import { credentialsSchema } from "~/lib/schemas/auth";
 import { verifyPassword } from "~/lib/auth/password";
 import { db } from "~/server/db";
 
-export const authConfig = {
+export const authConfig: NextAuthConfig = {
   providers: [
     DiscordProvider,
     CredentialsProvider<AuthCredentialsInputs>({
@@ -33,14 +33,13 @@ export const authConfig = {
         if (!ok) return null;
         return {
           id: user.id,
-          email: user.email ?? undefined,
-          name: user.name ?? undefined,
-          image: user.image ?? undefined,
+          email: user.email ?? "",
+          name: user.name,
         };
       },
     }),
   ],
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as NextAuthConfig["adapter"],
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
@@ -57,14 +56,13 @@ export const authConfig = {
     session: ({ session, token }) => ({
       ...session,
       user: {
-        ...session.user,
         id: (token.sub ?? token.id) as string,
-        email: token.email ?? session.user.email,
-        name: token.name ?? session.user.name,
+        email: token.email ?? session.user.email ?? "",
+        name: token.name ?? session.user.name ?? "",
       },
     }),
   },
   pages: {
     signIn: "/sign-in",
   },
-} satisfies NextAuthConfig;
+};
