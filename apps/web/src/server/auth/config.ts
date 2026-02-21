@@ -48,15 +48,15 @@ export const authConfig: NextAuthConfig = {
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;
-        token.email = user.email;
-        token.name = user.name;
+        token.email = user.email ?? undefined;
+        token.name = user.name ?? undefined;
       }
       return token;
     },
     session: ({ session, token }) => ({
       ...session,
       user: {
-        id: (token.sub ?? token.id) as string,
+        id: (token.sub ?? token.id)!,
         email: token.email ?? session.user.email ?? "",
         name: token.name ?? session.user.name ?? "",
       },
