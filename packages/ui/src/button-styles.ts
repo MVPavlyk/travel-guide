@@ -2,11 +2,9 @@ const primary = "bg-iris-100 text-white font-bold shadow hover:opacity-90";
 const outline =
   "border border-gray-300 bg-white text-gray-800 hover:bg-gray-200";
 const link = "text-iris-100 underline-offset-4 hover:underline";
-
 const secondaryFilled =
   "bg-gray-100 text-gray-800 font-bold shadow-sm hover:bg-gray-200";
 const ghost = "text-gray-700 hover:bg-gray-100 hover:text-gray-800";
-
 const secondaryText = "text-gray-800 hover:bg-gray-200";
 const dark = "bg-gray-700 text-white hover:bg-gray-800";
 
@@ -25,6 +23,8 @@ export const buttonVariantStyles = {
   link,
 } as const;
 
+export type ButtonVariant = keyof typeof buttonVariantStyles;
+
 export const navLinkVariantStyles = {
   primary,
   secondary: secondaryText,
@@ -33,5 +33,4 @@ export const navLinkVariantStyles = {
   link: link + " h-auto px-0 py-0 rounded-none",
 } as const;
 
-export type ButtonVariant = keyof typeof buttonVariantStyles;
 export type NavLinkVariant = keyof typeof navLinkVariantStyles;

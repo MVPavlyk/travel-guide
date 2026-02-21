@@ -1,4 +1,4 @@
-import { NavLink } from "~/_components/modules/common/NavLink";
+import { NavLink } from "@travel-guide/ui";
 import {
   Card,
   CardContent,
@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
+} from "@travel-guide/ui";
 import { SignUpForm } from "~/_components/modules/auth/SignUpForm";
 
 export default function SignUpPage() {

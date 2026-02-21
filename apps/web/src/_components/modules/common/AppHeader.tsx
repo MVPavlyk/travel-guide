@@ -1,7 +1,7 @@
 import type { Session } from "next-auth";
 
 import { HomeAuthBlock } from "~/_components/modules/auth/HomeAuthBlock";
-import { NavLink } from "~/_components/modules/common/NavLink";
+import { NavLink } from "@travel-guide/ui";
 
 type Props = { session: Session | null };
 

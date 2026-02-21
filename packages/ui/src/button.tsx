@@ -4,8 +4,8 @@ import {
   buttonVariantStyles,
   sizeStyles,
   type ButtonVariant,
-} from "~/lib/action-styles";
-import { cn } from "~/lib/utils";
+} from "./button-styles";
+import { cn } from "./utils";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;

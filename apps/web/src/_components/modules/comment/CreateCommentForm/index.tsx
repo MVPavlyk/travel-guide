@@ -3,11 +3,13 @@
 import { type SubmitEvent, useState } from "react";
 import { toast } from "sonner";
 
-import { Button } from "~/components/ui/button";
-import { FieldError } from "~/components/ui/field-error";
-import { FormError } from "~/components/ui/form-error";
-import { Label } from "~/components/ui/label";
-import { Textarea } from "~/components/ui/textarea";
+import {
+  Button,
+  FieldError,
+  FormError,
+  Label,
+  Textarea,
+} from "@travel-guide/ui";
 import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { createCommentSchema } from "~/lib/schemas/comment";
 import { api } from "~/trpc/react";

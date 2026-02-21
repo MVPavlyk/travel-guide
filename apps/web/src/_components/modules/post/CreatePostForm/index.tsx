@@ -4,12 +4,14 @@ import { type SubmitEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { Button } from "~/components/ui/button";
-import { FieldError } from "~/components/ui/field-error";
-import { FormError } from "~/components/ui/form-error";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { Textarea } from "~/components/ui/textarea";
+import {
+  Button,
+  FieldError,
+  FormError,
+  Input,
+  Label,
+  Textarea,
+} from "@travel-guide/ui";
 import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { createPostSchema } from "~/lib/schemas/post";
 import { api } from "~/trpc/react";
