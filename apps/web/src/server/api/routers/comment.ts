@@ -38,8 +38,8 @@ export const commentRouter = createTRPCRouter({
       return ctx.db.comment.create({
         data: {
           text: input.text,
-          postId: input.postId,
-          userId: ctx.session.user.id!,
+          post: { connect: { id: input.postId } },
+          user: { connect: { id: ctx.session.user.id } },
         },
         include: {
           user: {
