@@ -1,15 +1,9 @@
-import { redirect } from "next/navigation";
-
 import { AppLayout } from "~/_components/modules/common/AppLayout";
 import { CreatePostForm } from "~/_components/modules/post/CreatePostForm";
 import { auth } from "~/server/auth";
 
 export default async function CreatePostPage() {
   const session = await auth();
-
-  if (!session?.user) {
-    redirect("/sign-in");
-  }
 
   return (
     <AppLayout session={session}>
