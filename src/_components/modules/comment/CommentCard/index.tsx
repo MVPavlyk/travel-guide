@@ -3,9 +3,22 @@
 import { toast } from "sonner";
 
 import { Button } from "~/components/ui/button";
-import { type RouterOutputs, api } from "~/trpc/react";
+import { api } from "~/trpc/react";
 
-type Comment = RouterOutputs["comment"]["getByPostId"][number];
+type Comment = {
+  id: number;
+  text: string;
+  postId: number;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: {
+    id: string;
+    name: string | null;
+    email: string | null;
+    image: string | null;
+  };
+};
 
 type Props = {
   comment: Comment;
@@ -25,7 +38,7 @@ export function CommentCard({ comment, currentUserId }: Props) {
   });
 
   const canDelete = currentUserId != null && comment.userId === currentUserId;
-  const authorName = comment.user.name ?? comment.user.email ?? "Anonymous";
+  const authorName = comment.user.name ?? comment.user.email;
 
   return (
     <div className="rounded-lg border border-gray-300 bg-white p-4 shadow-sm">

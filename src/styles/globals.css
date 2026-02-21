@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  /* Travelbook-style palette */
   --color-background: #ffffff;
   --color-foreground: #171717;
   --color-gray-100: #f2f2f2;

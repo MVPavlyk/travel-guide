@@ -1,16 +1,33 @@
-import Link from "next/link";
+import { NavLink } from "~/app/_components/NavLink";
+import type { Session } from "next-auth";
 
-export function AppFooter() {
+type Props = { session: Session | null };
+
+export function AppFooter({ session }: Props) {
   return (
     <footer className="flex w-full flex-col items-center justify-center gap-4 bg-gray-800 px-60 py-12 text-white">
       <p className="text-lg font-bold">Travel Guide</p>
       <div className="flex gap-6 text-sm">
-        <Link href="/" className="no-underline hover:underline">
+        <NavLink href="/" variant="link" className="text-white hover:underline">
           Home
-        </Link>
-        <Link href="/sign-in" className="no-underline hover:underline">
-          Sign in
-        </Link>
+        </NavLink>
+        {session?.user ? (
+          <NavLink
+            href="/create-post"
+            variant="link"
+            className="text-white hover:underline"
+          >
+            New post
+          </NavLink>
+        ) : (
+          <NavLink
+            href="/sign-in"
+            variant="link"
+            className="text-white hover:underline"
+          >
+            Sign in
+          </NavLink>
+        )}
       </div>
     </footer>
   );

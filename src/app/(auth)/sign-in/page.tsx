@@ -1,6 +1,4 @@
-import Link from "next/link";
-
-import { buttonVariants } from "~/components/ui/button";
+import { NavLink } from "~/app/_components/NavLink";
 import {
   Card,
   CardContent,
@@ -26,31 +24,23 @@ export default function SignInPage() {
           <span className="absolute inset-0 flex items-center">
             <span className="w-full border-t border-gray-300" />
           </span>
-          <span className="relative flex justify-center text-xs uppercase text-gray-600">
+          <span className="relative mx-auto flex w-fit justify-center bg-white px-3 text-xs text-gray-600 uppercase">
             or
           </span>
         </div>
-        <Link
+        <NavLink
           href="/api/auth/signin/discord"
-          className={buttonVariants({
-            variant: "outline",
-            className: "w-full",
-          })}
+          variant="outline"
+          className="w-full font-medium"
         >
           Sign in with Discord
-        </Link>
+        </NavLink>
       </CardContent>
       <CardFooter className="flex flex-col gap-2 text-center text-sm text-gray-600">
         <span>Don&apos;t have an account?</span>
-        <Link
-          href="/sign-up"
-          className={buttonVariants({
-            variant: "link",
-            className: "text-primary h-auto p-0",
-          })}
-        >
+        <NavLink href="/sign-up" variant="link">
           Sign up
-        </Link>
+        </NavLink>
       </CardFooter>
     </Card>
   );

@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { TRPCError } from "@trpc/server";
 
-import { AppFooter } from "~/app/_components/AppFooter";
-import { AppHeader } from "~/app/_components/AppHeader";
+import { AppLayout } from "~/app/_components/AppLayout";
 import { PostCommentsSection } from "~/_components/modules/comment/PostCommentsSection";
 import { DeletePostButton } from "~/_components/modules/post/DeletePostButton";
 import { auth } from "~/server/auth";
@@ -26,12 +25,11 @@ export default async function PostPage({ params }: Props) {
     throw err;
   }
 
+  const comments = await serverCaller.comment.getByPostId({ postId });
   const isAuthor = session?.user?.id === post.createdById;
 
   return (
-    <main className="min-h-screen bg-background">
-      <AppHeader variant="back" />
-
+    <AppLayout session={session}>
       <div className="flex h-[200px] w-full items-center justify-between bg-gray-100 px-60">
         <div className="flex flex-1 flex-col">
           <h1 className="text-4xl font-bold text-gray-800">{post.title}</h1>
@@ -55,9 +53,12 @@ export default async function PostPage({ params }: Props) {
       </article>
 
       <section className="max-w-2xl px-60 pb-16">
-        <PostCommentsSection postId={postId} session={session} />
+        <PostCommentsSection
+          postId={postId}
+          session={session}
+          comments={comments}
+        />
       </section>
-      <AppFooter />
-    </main>
+    </AppLayout>
   );
 }

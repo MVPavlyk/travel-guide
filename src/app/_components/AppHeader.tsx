@@ -1,42 +1,24 @@
-import Link from "next/link";
+import type { Session } from "next-auth";
 
-import { HomeAuthBlock } from "~/app/_components/HomeAuthBlock";
+import { HomeAuthBlock } from "~/_components/modules/auth/HomeAuthBlock";
+import { NavLink } from "~/app/_components/NavLink";
 
-type Session = { user?: { name?: string | null } | null } | null;
+type Props = { session: Session | null };
 
-type Props = { variant: "home"; session: Session } | { variant: "back" };
-
-export function AppHeader(props: Props) {
+export function AppHeader({ session }: Props) {
   return (
-    <header className="flex h-20 w-full items-center justify-between bg-gray-100 px-60">
-      <Link
-        href="/"
-        className="text-xl font-bold text-gray-800 no-underline hover:underline"
-      >
+    <header className="flex h-20 w-full items-center justify-between border-b border-gray-300 bg-gray-100 px-60">
+      <NavLink href="/" variant="secondary">
         Travel Guide
-      </Link>
-      <div className="flex items-center gap-6">
-        {props.variant === "home" ? (
-          <>
-            <HomeAuthBlock session={props.session} />
-            {props.session?.user && (
-              <Link
-                href="/create-post"
-                className="text-xl text-iris-100 no-underline hover:underline"
-              >
-                New post
-              </Link>
-            )}
-          </>
-        ) : (
-          <Link
-            href="/"
-            className="text-gray-800 no-underline hover:underline"
-          >
-            Back to posts
-          </Link>
+      </NavLink>
+      <nav className="flex items-center gap-3" aria-label="Main">
+        <HomeAuthBlock session={session} />
+        {session?.user && (
+          <NavLink href="/create-post" variant="primary">
+            New post
+          </NavLink>
         )}
-      </div>
+      </nav>
     </header>
   );
 }

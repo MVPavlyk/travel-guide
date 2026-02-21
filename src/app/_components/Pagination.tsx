@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { NavLink } from "~/app/_components/NavLink";
 
 type Props = {
   total: number;
@@ -16,23 +16,27 @@ export function Pagination({ total, currentPage, perPage }: Props) {
       aria-label="Pagination"
     >
       {currentPage > 1 && (
-        <Link
+        <NavLink
           href={currentPage === 2 ? "/" : `/?page=${currentPage - 1}`}
-          className="flex h-8 min-w-[2.25rem] items-center justify-center rounded-[5px] bg-gray-700 px-4 text-xs text-white no-underline hover:bg-gray-800"
+          variant="dark"
+          size="sm"
+          className="min-w-[2.25rem]"
         >
           Previous
-        </Link>
+        </NavLink>
       )}
       <span className="text-gray-700">
         Page {currentPage} of {totalPages}
       </span>
       {currentPage < totalPages && (
-        <Link
+        <NavLink
           href={`/?page=${currentPage + 1}`}
-          className="flex h-8 min-w-[2.25rem] items-center justify-center rounded-[5px] bg-gray-700 px-4 text-xs text-white no-underline hover:bg-gray-800"
+          variant="dark"
+          size="sm"
+          className="min-w-[2.25rem]"
         >
           Next
-        </Link>
+        </NavLink>
       )}
     </nav>
   );

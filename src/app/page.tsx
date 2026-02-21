@@ -1,7 +1,6 @@
-import { AppFooter } from "~/app/_components/AppFooter";
-import { AppHeader } from "~/app/_components/AppHeader";
+import { AppLayout } from "~/app/_components/AppLayout";
 import { Pagination } from "~/app/_components/Pagination";
-import { PostCard } from "~/app/_components/PostCard";
+import { PostCard } from "~/_components/modules/post/PostCard";
 import { auth } from "~/server/auth";
 import { serverCaller } from "~/trpc/server";
 
@@ -23,9 +22,7 @@ export default async function Home({ searchParams }: Props) {
   });
 
   return (
-    <main className="flex min-h-screen flex-col bg-background">
-      <AppHeader variant="home" session={session} />
-
+    <AppLayout session={session}>
       <section className="flex h-[320px] w-full items-center justify-center bg-gray-100">
         <h2 className="text-5xl font-bold text-gray-800">Travel with us</h2>
       </section>
@@ -49,7 +46,6 @@ export default async function Home({ searchParams }: Props) {
           perPage={PER_PAGE}
         />
       </div>
-      <AppFooter />
-    </main>
+    </AppLayout>
   );
 }

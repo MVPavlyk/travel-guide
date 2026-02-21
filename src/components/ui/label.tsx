@@ -9,7 +9,7 @@ export const Label = forwardRef<
   <label
     ref={ref}
     className={cn(
-      "text-sm font-medium text-gray-800 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+      "text-sm leading-none font-medium text-gray-800 peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
       className,
     )}
     {...props}

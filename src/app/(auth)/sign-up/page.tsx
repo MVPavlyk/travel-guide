@@ -1,6 +1,4 @@
-import Link from "next/link";
-
-import { buttonVariants } from "~/components/ui/button";
+import { NavLink } from "~/app/_components/NavLink";
 import {
   Card,
   CardContent,
@@ -25,15 +23,9 @@ export default function SignUpPage() {
       </CardContent>
       <CardFooter className="flex flex-col gap-2 text-center text-sm text-gray-600">
         <span>Already have an account?</span>
-        <Link
-          href="/sign-in"
-          className={buttonVariants({
-            variant: "link",
-            className: "text-primary h-auto p-0",
-          })}
-        >
+        <NavLink href="/sign-in" variant="link">
           Sign in
-        </Link>
+        </NavLink>
       </CardFooter>
     </Card>
   );

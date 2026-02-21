@@ -1,26 +1,46 @@
 "use client";
 
+import type { Session } from "next-auth";
+
 import { CreateCommentForm } from "~/_components/modules/comment/CreateCommentForm";
 import { CommentCard } from "~/_components/modules/comment/CommentCard";
 import { api } from "~/trpc/react";
 
-type Session = {
-  user?: { id: string } | null;
-} | null;
+type Comment = {
+  id: number;
+  text: string;
+  postId: number;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: {
+    id: string;
+    name: string | null;
+    email: string | null;
+    image: string | null;
+  };
+};
 
 type Props = {
   postId: number;
-  session: Session;
+  session: Session | null;
+  comments: Comment[];
 };
 
-export function PostCommentsSection({ postId, session }: Props) {
-  const { data: comments, isLoading } = api.comment.getByPostId.useQuery({
-    postId,
-  });
+export function PostCommentsSection({
+  postId,
+  session,
+  comments: initialComments,
+}: Props) {
+  const { data: comments } = api.comment.getByPostId.useQuery(
+    { postId },
+    { initialData: initialComments },
+  );
+
   const currentUserId = session?.user?.id ?? null;
 
   return (
-    <section className="space-y-6">
+    <section className="w-lg space-y-6">
       <h2 className="text-xl font-semibold text-gray-800">Comments</h2>
 
       {session?.user && (
@@ -29,9 +49,7 @@ export function PostCommentsSection({ postId, session }: Props) {
         </div>
       )}
 
-      {isLoading ? (
-        <p className="text-gray-600">Loading comments…</p>
-      ) : !comments?.length ? (
+      {!comments ? (
         <p className="text-gray-600">No comments yet.</p>
       ) : (
         <ul className="flex flex-col gap-3">

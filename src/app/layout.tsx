@@ -23,7 +23,9 @@ export default function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} antialiased bg-background text-foreground`}>
+      <body
+        className={`${poppins.className} bg-background text-foreground antialiased`}
+      >
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Toaster richColors position="top-left" />
       </body>

@@ -9,10 +9,10 @@ import { FieldError } from "~/components/ui/field-error";
 import { FormError } from "~/components/ui/form-error";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { Textarea } from "~/components/ui/textarea";
 import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { createPostSchema } from "~/lib/schemas/post";
 import { api } from "~/trpc/react";
-import { cn } from "~/lib/utils";
 
 type FieldErrors = Record<string, string[] | undefined>;
 
@@ -49,7 +49,7 @@ export function CreatePostForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid max-w-lg gap-4">
+    <form onSubmit={handleSubmit} className="grid w-lg max-w-lg grow gap-4">
       <FormError message={formError} />
       <div className="grid gap-2">
         <Label htmlFor="title">Title</Label>
@@ -66,16 +66,13 @@ export function CreatePostForm() {
       </div>
       <div className="grid gap-2">
         <Label htmlFor="content">Content</Label>
-        <textarea
+        <Textarea
           id="content"
           name="content"
           rows={6}
           placeholder="Write your post..."
           disabled={createPost.isPending}
           aria-invalid={!!fieldErrors?.content}
-          className={cn(
-            "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-foreground placeholder:text-gray-500 shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-iris-100 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          )}
         />
         <FieldError name="content" fieldErrors={fieldErrors} />
       </div>

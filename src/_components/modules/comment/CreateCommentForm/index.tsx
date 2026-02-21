@@ -7,10 +7,10 @@ import { Button } from "~/components/ui/button";
 import { FieldError } from "~/components/ui/field-error";
 import { FormError } from "~/components/ui/form-error";
 import { Label } from "~/components/ui/label";
+import { Textarea } from "~/components/ui/textarea";
 import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { createCommentSchema } from "~/lib/schemas/comment";
 import { api } from "~/trpc/react";
-import { cn } from "~/lib/utils";
 
 type FieldErrors = Record<string, string[] | undefined>;
 
@@ -64,16 +64,13 @@ export function CreateCommentForm({ postId }: Props) {
       <input type="hidden" name="postId" value={postId} />
       <div className="grid gap-2">
         <Label htmlFor="comment-text">Comment</Label>
-        <textarea
+        <Textarea
           id="comment-text"
           name="text"
           rows={4}
           placeholder="Write a comment..."
           disabled={createComment.isPending}
           aria-invalid={!!fieldErrors?.text}
-          className={cn(
-            "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-foreground placeholder:text-gray-500 shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-iris-100 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          )}
         />
         <FieldError name="text" fieldErrors={fieldErrors} />
       </div>
