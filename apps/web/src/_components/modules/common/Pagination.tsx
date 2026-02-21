@@ -1,4 +1,4 @@
-import { NavLink } from "~/_components/modules/common/NavLink";
+import { NavLink } from "@travel-guide/ui";
 
 type Props = {
   total: number;

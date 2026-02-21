@@ -1,4 +1,4 @@
-import { NavLink } from "~/_components/modules/common/NavLink";
+import { NavLink } from "@travel-guide/ui";
 import type { Session } from "next-auth";
 
 type Props = { session: Session | null };
@@ -9,7 +9,7 @@ export function AppFooter({ session }: Props) {
       <p className="text-lg font-bold">Travel Guide</p>
       <div className="flex gap-6 text-sm">
         <NavLink
-          href="/public"
+          href="/"
           variant="link"
           className="text-white hover:underline"
         >

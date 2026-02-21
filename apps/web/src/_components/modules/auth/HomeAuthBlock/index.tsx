@@ -2,7 +2,7 @@
 
 import type { Session } from "next-auth";
 
-import { NavLink } from "~/_components/modules/common/NavLink";
+import { NavLink } from "@travel-guide/ui";
 import { SignOutButton } from "~/_components/modules/auth/SignOutButton";
 
 export function HomeAuthBlock({ session }: { session: Session | null }) {

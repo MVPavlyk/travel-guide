@@ -5,8 +5,8 @@ import {
   navLinkVariantStyles,
   sizeStyles,
   type NavLinkVariant,
-} from "~/lib/action-styles";
-import { cn } from "~/lib/utils";
+} from "./button-styles";
+import { cn } from "./utils";
 
 const base =
   "inline-flex items-center justify-center font-semibold no-underline transition-colors";

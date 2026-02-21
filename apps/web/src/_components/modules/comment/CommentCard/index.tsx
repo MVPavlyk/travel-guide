@@ -2,7 +2,7 @@
 
 import { toast } from "sonner";
 
-import { Button } from "~/components/ui/button";
+import { Button } from "@travel-guide/ui";
 import { api, type Comment } from "~/trpc/react";
 
 type Props = {
