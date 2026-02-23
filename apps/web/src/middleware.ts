@@ -3,20 +3,23 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const protectedPaths = ["/create-post"];
+const authOnlyPaths = ["/sign-in", "/sign-up"];
 
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
-  const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
-
-  if (!isProtected) return NextResponse.next();
-
   const token = await getToken({
     req,
     secret: process.env.AUTH_SECRET,
     salt: "authjs.session-token",
   });
 
-  if (!token) {
+  const isAuthPage = authOnlyPaths.some((path) => pathname.startsWith(path));
+  if (isAuthPage && token) {
+    return NextResponse.redirect(new URL("/", req.nextUrl.origin));
+  }
+
+  const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
+  if (isProtected && !token) {
     const signInUrl = new URL("/sign-in", req.nextUrl.origin);
     signInUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(signInUrl);
@@ -26,5 +29,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/create-post"],
+  matcher: ["/create-post", "/sign-in", "/sign-up"],
 };
