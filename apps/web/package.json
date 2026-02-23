@@ -23,6 +23,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@radix-ui/react-tooltip": "^1.0.7",
     "@auth/prisma-adapter": "^2.7.2",
     "@travel-guide/database": "0.0.0",
     "@travel-guide/ui": "0.0.0",
