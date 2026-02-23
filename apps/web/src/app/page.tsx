@@ -4,7 +4,7 @@ import { PostCard } from "~/_components/modules/post/PostCard";
 import { auth } from "~/server/auth";
 import { serverCaller } from "~/trpc/server";
 
-const PER_PAGE = 10;
+const PER_PAGE = 12;
 
 type Props = {
   searchParams: Promise<{ page?: string }>;
