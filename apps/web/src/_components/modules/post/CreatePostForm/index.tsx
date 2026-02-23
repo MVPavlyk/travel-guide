@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import {
   Button,
   FieldError,
+  type FieldErrors,
   FormError,
   Input,
   Label,
@@ -15,8 +16,6 @@ import {
 import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { createPostSchema } from "~/lib/schemas/post";
 import { api } from "~/trpc/react";
-
-type FieldErrors = Record<string, string[] | undefined>;
 
 export function CreatePostForm() {
   const router = useRouter();
@@ -43,7 +42,7 @@ export function CreatePostForm() {
     const parsed = parseFormData(formData, createPostSchema);
 
     if (!parsed.success) {
-      setFieldErrors(getFieldErrors(parsed) as FieldErrors);
+      setFieldErrors(getFieldErrors(parsed));
       return;
     }
 

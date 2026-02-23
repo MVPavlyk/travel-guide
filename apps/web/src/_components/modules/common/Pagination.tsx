@@ -17,7 +17,7 @@ export function Pagination({ total, currentPage, perPage }: Props) {
     >
       {currentPage > 1 && (
         <NavLink
-          href={currentPage === 2 ? "/public" : `/?page=${currentPage - 1}`}
+          href={currentPage === 2 ? "/" : `/?page=${currentPage - 1}`}
           variant="dark"
           size="sm"
           className="min-w-[2.25rem]"
@@ -30,7 +30,7 @@ export function Pagination({ total, currentPage, perPage }: Props) {
       </span>
       {currentPage < totalPages && (
         <NavLink
-          href={`/public?page=${currentPage + 1}`}
+          href={`/?page=${currentPage + 1}`}
           variant="dark"
           size="sm"
           className="min-w-[2.25rem]"

@@ -27,7 +27,7 @@ export default function RootLayout({
         className={`${poppins.className} bg-background text-foreground antialiased`}
       >
         <TRPCReactProvider>{children}</TRPCReactProvider>
-        <Toaster richColors position="top-left" />
+        <Toaster richColors position="bottom-right" />
       </body>
     </html>
   );
