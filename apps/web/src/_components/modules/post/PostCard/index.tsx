@@ -3,7 +3,7 @@ import type { Post } from "~/trpc/react";
 
 export function PostCard({ post }: { post: Post }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg bg-white p-7 shadow-xl">
+    <div className="flex h-full flex-col overflow-hidden rounded-lg bg-white p-7 shadow-xl">
       <h2 className="text-lg font-bold text-black">
         <NavLink
           href={`/post/${post.id}`}

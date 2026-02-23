@@ -4,12 +4,17 @@ import { type SubmitEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { Button, FieldError, FormError, Input, Label } from "@travel-guide/ui";
+import {
+  Button,
+  FieldError,
+  type FieldErrors,
+  FormError,
+  Input,
+  Label,
+} from "@travel-guide/ui";
 import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { signUpSchema } from "~/lib/schemas/auth";
 import { api } from "~/trpc/react";
-
-type FieldErrors = Record<string, string[] | undefined>;
 
 export function SignUpForm() {
   const router = useRouter();
@@ -45,8 +50,7 @@ export function SignUpForm() {
     const parsed = parseFormData(formData, signUpSchema);
 
     if (!parsed.success) {
-      const errors = getFieldErrors(parsed) as FieldErrors;
-      setFieldErrors(errors);
+      setFieldErrors(getFieldErrors(parsed));
 
       return;
     }

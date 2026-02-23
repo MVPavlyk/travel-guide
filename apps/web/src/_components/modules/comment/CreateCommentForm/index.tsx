@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import {
   Button,
   FieldError,
+  type FieldErrors,
   FormError,
   Label,
   Textarea,
@@ -13,8 +14,6 @@ import {
 import { getFieldErrors, parseFormData } from "~/lib/form-data";
 import { createCommentSchema } from "~/lib/schemas/comment";
 import { api } from "~/trpc/react";
-
-type FieldErrors = Record<string, string[] | undefined>;
 
 type Props = {
   postId: number;
@@ -46,7 +45,7 @@ export function CreateCommentForm({ postId }: Props) {
     const parsed = parseFormData(formData, createCommentSchema);
 
     if (!parsed.success) {
-      setFieldErrors(getFieldErrors(parsed) as FieldErrors);
+      setFieldErrors(getFieldErrors(parsed));
       return;
     }
 
