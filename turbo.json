@@ -8,10 +8,7 @@
   ],
   "tasks": {
     "generate": {
-      "outputs": [
-        "generated/prisma/**",
-        "node_modules/.prisma/**"
-      ]
+      "outputs": ["node_modules/.prisma/**"]
     },
     "build": {
       "dependsOn": ["^generate", "^build"],

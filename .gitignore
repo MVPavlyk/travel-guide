@@ -49,8 +49,5 @@ yarn-error.log*
 *.swo
 *~
 
-# generated (Prisma client, etc.)
-generated/
-
 # turbo
 .turbo/

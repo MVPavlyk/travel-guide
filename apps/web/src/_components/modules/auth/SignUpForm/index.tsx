@@ -22,22 +22,13 @@ export function SignUpForm() {
   const [formError, setFormError] = useState<string | undefined>();
 
   const signUp = api.auth.signUp.useMutation({
-    onSuccess(result) {
-      if (result.success) {
-        toast.success("Account created. Sign in with your credentials.");
-        router.push("/sign-in");
-      } else {
-        setFormError(result.formError);
-        toast.error(result.formError);
-      }
+    onSuccess() {
+      toast.success("Account created. Sign in with your credentials.");
+      router.push("/sign-in");
     },
     onError(err) {
-      const message =
-        (err.data as { formError?: string } | undefined)?.formError ??
-        err.message ??
-        "Something went wrong";
-      setFormError(message);
-      toast.error(message);
+      setFormError(err.message);
+      toast.error(err.message);
     },
   });
 

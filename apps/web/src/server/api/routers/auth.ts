@@ -1,3 +1,5 @@
+import { TRPCError } from "@trpc/server";
+
 import { hashPassword } from "~/lib/auth/password";
 import { signUpSchema } from "~/lib/schemas/auth";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -14,10 +16,10 @@ export const authRouter = createTRPCRouter({
       });
 
       if (existing) {
-        return {
-          success: false,
-          formError: "An account with this email already exists",
-        };
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "An account with this email already exists",
+        });
       }
 
       const hashed = await hashPassword(input.password);
@@ -31,12 +33,10 @@ export const authRouter = createTRPCRouter({
           },
         });
       } catch {
-        return {
-          success: false,
-          formError: "Something went wrong. Please try again.",
-        };
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Something went wrong. Please try again.",
+        });
       }
-
-      return { success: true };
     }),
 });
