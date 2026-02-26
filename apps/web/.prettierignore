@@ -1,9 +1,6 @@
 # Dependencies
 node_modules
 
-# Generated (Prisma client, etc.)
-generated
-
 # Build / cache
 .next
 out

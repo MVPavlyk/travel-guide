@@ -23,12 +23,13 @@ export function CommentCard({ comment, currentUserId }: Props) {
   });
 
   const canDelete = currentUserId != null && comment.userId === currentUserId;
-  const authorName = comment.user.name;
 
   return (
     <div className="rounded-lg border border-gray-300 bg-white p-4 shadow-sm">
       <div className="mb-2 flex items-center justify-between gap-2">
-        <span className="text-sm font-medium text-gray-800">{authorName}</span>
+        <span className="text-sm font-medium text-gray-800">
+          {comment.user.name}
+        </span>
         <span className="text-xs text-gray-600">
           {new Date(comment.createdAt).toLocaleString()}
         </span>
